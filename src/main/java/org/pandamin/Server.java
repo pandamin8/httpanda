@@ -1,16 +1,18 @@
 package org.pandamin;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     int port;
+    private ExecutorService executorService;
 
-    public Server(int port) {
+    public Server(int port, int threadPoolSize) {
         this.port = port;
+        this.executorService = Executors.newFixedThreadPool(threadPoolSize);
     }
 
     public void listen() throws IOException {
@@ -18,16 +20,13 @@ public class Server {
             System.out.println("server is up on port: " + port);
 
             while (true) {
-                try (Socket client = serverSocket.accept()) {
-                    InputStreamReader isr = new InputStreamReader(client.getInputStream());
-                    Request request = new Request(isr);
-                    String requestMessage = request.getRequestMessage();
-
-                    OutputStream outputStream = client.getOutputStream();
-                    Response response = new Response(outputStream);
-                    response.sendMessage("HTTP/1.1 200 OK\r\n\r\nHello World");
-                }
+                Socket client = serverSocket.accept();
+                ClientHandler clientHandler = new ClientHandler(client);
+                executorService.submit(clientHandler);
             }
+        } finally {
+            if (executorService != null && !executorService.isShutdown())
+                executorService.shutdown();
         }
     }
 }

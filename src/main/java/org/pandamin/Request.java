@@ -3,6 +3,7 @@ package org.pandamin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Request {
 
@@ -24,5 +25,14 @@ public class Request {
         }
 
         return request.toString();
+    }
+
+    public String getPath() throws IOException {
+        String requestMessage = this.getRequestMessage();
+
+        // Get the first line of the HTTP request
+        String line = Arrays.toString(requestMessage.split("\n", 0));
+        // Extract and return the path from the first line of the HTTP request
+        return line.split(" ")[1];
     }
 }
