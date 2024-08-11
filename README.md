@@ -1,6 +1,6 @@
 # 🐼 HTTPanda
 
-An http server as fast 
+An HTTP server as fast 
 
 > *This package is still under construction*
 
@@ -50,3 +50,5 @@ Be sure to have JDK 7 installed.
 If you are interested in this project and want to share your ideas you can discuss [here](https://github.com/pandamin8/httpanda/discussions).
 
 A contributing guide has not been made yet but feel free to contribute, [post issues](https://github.com/pandamin8/httpanda/issues), and give this hungry panda some fresh bamboo.
+
+![image](https://github.com/user-attachments/assets/d359283d-62df-4cdd-b565-74a6a1e6adfe)
