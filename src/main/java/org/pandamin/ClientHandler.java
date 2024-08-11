@@ -7,10 +7,12 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
 
-    private Socket client;
+    private final Socket client;
+    private final Router router;
 
-    public ClientHandler(Socket client) {
+    public ClientHandler(Socket client, Router router) {
         this.client = client;
+        this.router = router;
     }
 
     @Override
@@ -20,8 +22,11 @@ public class ClientHandler implements Runnable {
             OutputStream outputStream = client.getOutputStream();
 
             Request request = new Request(isr);
+            String path = request.getPath();
+
             Response response = new Response(outputStream);
-            response.sendMessage("HTTP/1.1 200 OK\r\n\r\nHello World");
+
+            router.getHandler(path).accept(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

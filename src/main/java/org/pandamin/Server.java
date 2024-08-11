@@ -3,16 +3,20 @@ package org.pandamin;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 public class Server {
     int port;
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
+    public final Router router;
 
     public Server(int port, int threadPoolSize) {
         this.port = port;
         this.executorService = Executors.newFixedThreadPool(threadPoolSize);
+        this.router = new Router();
     }
 
     public void listen() throws IOException {
@@ -21,7 +25,7 @@ public class Server {
 
             while (true) {
                 Socket client = serverSocket.accept();
-                ClientHandler clientHandler = new ClientHandler(client);
+                ClientHandler clientHandler = new ClientHandler(client, router);
                 executorService.submit(clientHandler);
             }
         } finally {
