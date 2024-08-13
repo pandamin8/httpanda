@@ -24,7 +24,7 @@ For now this package only supports GET method. But other methods will be added e
 
 ```java
 Server server = new Server(portNumber, numberOfThreads);
-server.router.addRoute("/hello", response -> {
+server.router.addRoute("/hello", (request, response) -> {
 try {
     response.sendMessage("hello world");
     } catch (IOException e) {
