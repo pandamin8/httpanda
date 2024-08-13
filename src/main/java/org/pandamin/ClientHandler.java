@@ -26,7 +26,7 @@ public class ClientHandler implements Runnable {
 
             Response response = new Response(outputStream);
 
-            router.getHandler(path).accept(response);
+            router.getHandler(path).accept(request, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
