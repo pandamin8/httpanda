@@ -22,11 +22,12 @@ public class ClientHandler implements Runnable {
             OutputStream outputStream = client.getOutputStream();
 
             Request request = new Request(isr);
-            String path = request.getPath();
+            String path = request.getUri();
 
             Response response = new Response(outputStream);
 
-            router.getHandler(path).accept(request, response);
+            RouteKey routeKey = new RouteKey(path, request.getMethod());
+            router.getHandler(routeKey).accept(request, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

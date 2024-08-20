@@ -18,32 +18,47 @@ As a refresher for Java programming language I decided to make an HTTP server fr
 
 For now this package only supports GET method. But other methods will be added eventually.
 
-## 🚀 Usage
-
-*Show off what your software looks like in action! Try to limit it to one-liners if possible and don't delve into API specifics.*
-
-```java
-Server server = new Server(portNumber, numberOfThreads);
-server.router.addRoute("/hello", (request, response) -> {
-try {
-    response.sendMessage("hello world");
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-});
-```
-
-
 ## ⬇️ Installation
 
 This package hasn't been published yet on any Java package repository. 
 
 Be sure to have JDK 7 installed.
 
+## 🚀 Usage
+
+*Setup the server by creating the server object and set the port number and the number of threads you want your server to work with. Then, implement the REST endpoints "aka routes".*
+
+First setup the server
+```java
+Server server = new Server(portNumber, numberOfThreads);
+```
+
+This is how you can implement a GET route with the ```router.get``` method and pass the URI and a lambda function as parameters. 
+```java
+server.router.get("/hello", (req, res) -> {
+try {
+    res.sendMessage("hello world");
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+});
+```
+
+The Router class has the following methods for setting up endpoints.
+
+| Method                                                                                          |
+|:------------------------------------------------------------------------------------------------|
+| ``get(String uri, BiConsumer<Request, Response> handler)``<br/>*Implement a GET endpoint*       |
+| ``post(String uri, BiConsumer<Request, Response> handler)``<br/>*Implement a POST endpoint*     |
+| ``patch(String uri, BiConsumer<Request, Response> handler)``<br/>*Implement a PATCH endpoint*   |
+| ``delete(String uri, BiConsumer<Request, Response> handler)``<br/>*Implement a DELETE endpoint* |
+
+
 ## 📝 TODO list
-* Add other HTTP methods.
+* Add other HTTP methods (GET, POST, DELETE, and UPDATE are added but there are more methods).
 * Add support for HTTP headers.
 * Make the server to be able to serve static files.
+* 
 
 ## 🎍 Feedback and Contributing
 

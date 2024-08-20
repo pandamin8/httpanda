@@ -7,18 +7,34 @@ import java.util.function.BiConsumer;
 
 public class Router {
 
-    private final Map<String, BiConsumer<Request, Response>> routes;
+    private final Map<RouteKey, BiConsumer<Request, Response>> routes;
 
-    public Router() {
+    Router() {
         routes = new HashMap<>();
     }
 
-    public void addRoute(String path, BiConsumer<Request, Response> handler) {
-        routes.put(path, handler);
+    public void get(String uri, BiConsumer<Request, Response> handler) {
+        RouteKey routeKey = new RouteKey(uri, HttpMethod.GET);
+        routes.put(routeKey, handler);
     }
 
-    public BiConsumer<Request, Response> getHandler(String path) {
-        return routes.getOrDefault(path, this::notFoundHandler);
+    public void post(String uri, BiConsumer<Request, Response> handler) {
+        RouteKey routeKey = new RouteKey(uri, HttpMethod.POST);
+        routes.put(routeKey, handler);
+    }
+
+    public void patch(String uri, BiConsumer<Request, Response> handler) {
+        RouteKey routeKey = new RouteKey(uri, HttpMethod.PATCH);
+        routes.put(routeKey, handler);
+    }
+
+    public void delete(String uri, BiConsumer<Request, Response> handler) {
+        RouteKey routeKey = new RouteKey(uri, HttpMethod.DELETE);
+        routes.put(routeKey, handler);
+    }
+
+    BiConsumer<Request, Response> getHandler(RouteKey route) {
+        return routes.getOrDefault(route, this::notFoundHandler);
     }
 
     private void notFoundHandler(Request request, Response response) {
