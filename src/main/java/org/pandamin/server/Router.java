@@ -1,4 +1,4 @@
-package org.pandamin;
+package org.pandamin.server;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package org.pandamin;
+package org.pandamin.server;
 
 public class StatusCode {
     static String OK_200 = "200 OK";

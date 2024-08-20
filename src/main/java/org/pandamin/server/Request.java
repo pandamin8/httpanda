@@ -1,4 +1,4 @@
-package org.pandamin;
+package org.pandamin.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Request {
 
-    InputStreamReader isr;
+    private final InputStreamReader isr;
 
     public Request(InputStreamReader isr) {
         this.isr = isr;
