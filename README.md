@@ -58,7 +58,6 @@ The Router class has the following methods for setting up endpoints.
 * Add other HTTP methods (GET, POST, DELETE, and UPDATE are added but there are more methods).
 * Add support for HTTP headers.
 * Make the server to be able to serve static files.
-* 
 
 ## 🎍 Feedback and Contributing
 
